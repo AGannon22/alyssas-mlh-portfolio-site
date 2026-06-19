@@ -16,3 +16,6 @@ def hobbies():
 @app.route('/map')
 def map():
     return render_template('map.html', title="Map", url=os.getenv("URL"))
+@app.route('/experience')
+def experience():
+    return render_template('hobbies.html', title="Experience", url=os.getenv("URL"))
