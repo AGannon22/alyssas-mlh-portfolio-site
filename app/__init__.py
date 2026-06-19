@@ -12,7 +12,13 @@ def index():
 
 @app.route('/hobbies')
 def hobbies():
+    hobbies = {"Cooking": "img1",
+               "Baking": "img2",
+               "Gaming": "img3",
+               "Drawing": "img4"}
+    #eee
     return render_template('hobbies.html', title="Hobbies", url=os.getenv("URL"))
+
 @app.route('/map')
 def map():
     return render_template('map.html', title="Map", url=os.getenv("URL"))
