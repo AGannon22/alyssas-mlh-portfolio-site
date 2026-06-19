@@ -12,11 +12,13 @@ def index():
 
 @app.route('/hobbies')
 def hobbies():
-    hobbies = {"Cooking": "img1",
-               "Baking": "img2",
-               "Gaming": "img3",
-               "Drawing": "img4"}
-    #eee
+    hobbies = [
+        {"name": "Cooking", "img": "img1","description": "I only recently started cooking since I started college, but I really enjoy finding new recipes to try out! My favorite foods to make right now are carbonara and porkchops with baked potatoes!"},
+        {"name": "Baking", "img": "img2","description": "I've been baking for longer than I can remember. My grandmother taught me how to make chocolate chip cookies when I was a kid and I've been baking ever since. My favorite thing to bake are my chocolate chip and sugar cookie brookies!"},
+        {"name": "Gaming", "img": "img3","description": "My gaming interests started in second grade with Pokemon on the 3DS. I still play Pokemon to this day, but I've also gotten into Valorant, Stardew Valley, Tomodachi Life, and more!"},
+        {"name": "Drawing", "img": "img4","description": "I've been drawing literally forever. I was going to be a Graphic Designer before I switched to Comp Sci. I was active in my Art Honors Society and still draw and make art on occasion!"},
+        {"name": "Skiing", "img": "img5","description": "Skiing is life. There is no better way to destroy my calfs and knees. I started skiing at 13, and it's been a tradition in my friend group to go skiing every winter break for the past 4 years!"},
+    ]
     return render_template('hobbies.html', title="Hobbies", url=os.getenv("URL"))
 
 @app.route('/map')
