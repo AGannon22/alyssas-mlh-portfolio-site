@@ -19,7 +19,7 @@ def hobbies():
         {"name": "Drawing", "time": "12 years", "img": "app/static/img/hobby_imgs/img4.jpg","description": "I've been drawing literally forever. I was going to be a Graphic Designer before I switched to Comp Sci. I was active in my Art Honors Society and still draw and make art on occasion!"},
         {"name": "Skiing", "time": "5 years", "img": "app/static/img/hobby_imgs/img5.jpg","description": "Skiing is life. There is no better way to destroy my calfs and knees. I started skiing at 13, and it's been a tradition in my friend group to go skiing every winter break for the past 4 years! Shoutout Killington!"},
     ]
-    return render_template('hobbies.html', title="Hobbies", url=os.getenv("URL"))
+    return render_template('base.html', title="Hobbies", items=hobbies, url=os.getenv("URL"))
 
 @app.route('/map')
 def map():
@@ -31,4 +31,4 @@ def experience():
         {"name": "Restaurant Team Member @ Tim Hortons", "time": "Dec 2024-Oct 2025", "img": "app/static/img/work_imgs/timhortonslogo.png", "description": "As a restaurant team member at Tim Hortons, I would do a variety of tasks such as taking orders, preparing food, and making coffee and other drinks."},
         {"name": "Instructor @ iD Tech Columbia", "time": "Jun 2025-Aug 2025", "img": "app/static/img/work_imgs/idtechlogo.png", "description": "I was an instructor at iD Tech at Columbia University, where I taught classes on Machine Learning, Scratch, and Minecraft Modding to students ages 6-17."},
     ]
-    return render_template('hobbies.html', title="Experience", url=os.getenv("URL"))
+    return render_template('base.html', title="Experience", items=work_experience, url=os.getenv("URL"))

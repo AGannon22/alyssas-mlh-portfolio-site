@@ -14,8 +14,8 @@
         href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
         rel="stylesheet">
 
-    <link lang='sass' rel="stylesheet" href="./static/styles/main.css">
-    <link rel='icon' href='./static/img/favicon.ico' type='image/x-icon' />
+    <link lang='sass' rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
+    <link rel='icon' href='{{ url_for('static', filename='img/favicon.ico') }}' type='image/x-icon' />
     <title>{{ title }}</title>
 </head>
 <body>
@@ -23,12 +23,13 @@
         <div class="nav-content">
             <a href="/">
                 <div class="nav-logo">
-                    <img src="./static/img/logo.svg" />
+                    <img src="{{ url_for('static', filename='img/logo.svg') }}" />
                 </div>
             </a>
             <ul class="nav-links">
                 <li><a href="/">Home</a></li>
                 <li><a href="/hobbies">Hobbies</a></li>
+                <li><a href="/experience">Experience</a></li>
                 <li><a href="/map">Map</a></li>
             </ul>
         </div>
@@ -37,5 +38,20 @@
     <div class="regular-title">
         <h1>{{ title }}</h1>
     </div>
+    <div class = "items-container">
+        {% for item in items %}
+        <div class="item">
+            <div class="item-image">
+                <img src="{{ url_for('static', filename=item.img|replace('app/static/','')) }}" alt="{{ item.name }}">
+            </div>
+            <div class="item-info">
+                <h2>{{ item.name }}</h2>
+                <p class="item-time">{{ item.time }}</p>
+                <p>{{ item.description }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
 
 </body>
+</html>
