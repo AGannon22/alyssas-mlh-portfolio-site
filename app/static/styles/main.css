@@ -229,6 +229,48 @@ body {
     color: #333;
 }
 
+/* Personal projects cards */
+.personal-projects-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 12px;
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.personal-projects-item {
+    background: #ffffff;
+    border: 1px solid rgba(28,83,159,0.08);
+    border-radius: 10px;
+    padding: 14px;
+    box-shadow: 0 6px 18px rgba(12,40,80,0.06);
+    transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.personal-projects-item h4 {
+    margin: 0 0 8px 0;
+    color: #1d539f;
+}
+
+.personal-projects-item p {
+    margin: 6px 0 8px 0;
+    color: #333;
+}
+
+@media (max-width: 1024px) {
+    .personal-projects-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .personal-projects-container {
+        grid-template-columns: 1fr;
+    }
+}
+
 @media (max-width: 820px) {
     .about-container {
         flex-direction: column;
