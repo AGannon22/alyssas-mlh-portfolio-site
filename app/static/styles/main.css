@@ -119,3 +119,39 @@ body {
     font-size: 50px;
     font-weight: 700;
 }
+.map-container {
+    max-width: 1100px;
+    margin: 30px auto 80px auto;
+    padding: 0 20px;
+}
+
+.map-container .responsive-map {
+    width: 100%;
+    height: 600px;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+}
+
+@media (max-width: 600px) {
+    .map-container .responsive-map {
+        height: 360px;
+    }
+    .profile h1 {
+        font-size: 32px;
+    }
+}
+
+.regular-title {
+    height: auto;
+    padding: 22px 0; 
+    margin-bottom: 40px;
+    background: #1d539f;
+}
+
+.regular-title h1 {
+    font-size: 50px;
+    font-weight: 700;
+    color: #ffffff;
+    text-align: center;
+}
