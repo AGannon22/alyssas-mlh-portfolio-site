@@ -1,10 +1,17 @@
 import os
 from flask import Flask, render_template, request
 from dotenv import load_dotenv
+from peewee import *
+import datetime
 
 load_dotenv()
 app = Flask(__name__)
-
+mydb = MySQLDatabase(os.getenv("MYSQL_DATABASE"), 
+                     user = os.getenv("MYSQL_USER"),
+                    password=os.getenv("MYSQL_PASSWORD"), 
+                    host=os.getenv("MYSQL_HOST"),
+                    port=3306)
+print(mydb)
 
 @app.route('/')
 def index():
