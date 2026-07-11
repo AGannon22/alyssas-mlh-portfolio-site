@@ -1,17 +1,33 @@
 import os
+import hashlib
 from flask import Flask, render_template, request
 from dotenv import load_dotenv
 from peewee import *
 import datetime
+from playhouse.shortcuts import model_to_dict
 
 load_dotenv()
 app = Flask(__name__)
+
+@app.template_filter('gravatar_hash')
+def gravatar_hash(email):
+    return hashlib.md5(email.strip().lower().encode('utf-8')).hexdigest()
 mydb = MySQLDatabase(os.getenv("MYSQL_DATABASE"), 
                      user = os.getenv("MYSQL_USER"),
                     password=os.getenv("MYSQL_PASSWORD"), 
                     host=os.getenv("MYSQL_HOST"),
                     port=3306)
 print(mydb)
+class TimelinePost(Model):
+    name = CharField()
+    email = CharField()
+    content = TextField()
+    created_at = DateTimeField(default=datetime.datetime.now)
+
+    class Meta:
+        database = mydb
+mydb.connect()
+mydb.create_tables([TimelinePost])
 
 @app.route('/')
 def index():
@@ -31,6 +47,7 @@ def hobbies():
 @app.route('/map')
 def map():
     return render_template('map.html', title="Map", url=os.getenv("URL"))
+
 @app.route('/experience')
 def experience():
     work_experience = [
@@ -39,3 +56,26 @@ def experience():
         {"name": "Instructor @ iD Tech Columbia", "time": "Jun 2025-Aug 2025", "img": "app/static/img/work_imgs/idtechlogo.png", "description": "I was an instructor at iD Tech at Columbia University, where I taught classes on Machine Learning, Scratch, and Minecraft Modding to students ages 6-17."},
     ]
     return render_template('base.html', title="Experience", items=work_experience, url=os.getenv("URL"))
+
+@app.route('/api/timeline_post', methods=['POST'])
+def post_time_line_post():
+    name = request.form.get('name')
+    email = request.form.get('email')
+    content = request.form.get('content')
+    print(name)
+    print(email)
+    print(content)
+    timeline_post = TimelinePost.create(name=name, email=email, content=content)
+    return model_to_dict(timeline_post)
+@app.route('/api/timeline_post', methods=['GET'])
+def get_time_line_post():
+    return {
+        'timeline_posts': [
+            model_to_dict(p)
+            for p in TimelinePost.select().order_by(TimelinePost.created_at.desc())
+        ]
+    }
+@app.route('/timeline')
+def timeline():
+    posts = TimelinePost.select().order_by(TimelinePost.created_at.desc())
+    return render_template('timeline-template.html', title="Timeline", url=os.getenv("URL"), posts=posts)
