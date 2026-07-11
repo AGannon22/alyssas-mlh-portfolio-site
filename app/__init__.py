@@ -70,3 +70,6 @@ def get_time_line_post():
             for p in TimelinePost.select().order_by(TimelinePost.created_at.desc())
         ]
     }
+@app.route('/timeline')
+def timeline():
+    return render_template('timeline-template.html', title="Timeline", url=os.getenv("URL"))
