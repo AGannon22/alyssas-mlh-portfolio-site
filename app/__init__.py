@@ -72,4 +72,5 @@ def get_time_line_post():
     }
 @app.route('/timeline')
 def timeline():
-    return render_template('timeline-template.html', title="Timeline", url=os.getenv("URL"))
+    posts = TimelinePost.select().order_by(TimelinePost.created_at.desc())
+    return render_template('timeline-template.html', title="Timeline", url=os.getenv("URL"), posts=posts)
