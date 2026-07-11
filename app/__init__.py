@@ -1,4 +1,5 @@
 import os
+import hashlib
 from flask import Flask, render_template, request
 from dotenv import load_dotenv
 from peewee import *
@@ -7,6 +8,10 @@ from playhouse.shortcuts import model_to_dict
 
 load_dotenv()
 app = Flask(__name__)
+
+@app.template_filter('gravatar_hash')
+def gravatar_hash(email):
+    return hashlib.md5(email.strip().lower().encode('utf-8')).hexdigest()
 mydb = MySQLDatabase(os.getenv("MYSQL_DATABASE"), 
                      user = os.getenv("MYSQL_USER"),
                     password=os.getenv("MYSQL_PASSWORD"), 

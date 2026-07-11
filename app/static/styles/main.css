@@ -466,10 +466,22 @@ body {
 
 .timeline-post-header {
     display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: 8px;
+    align-items: center;
     gap: 12px;
+    margin-bottom: 8px;
+}
+
+.timeline-post-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    flex: 0 0 40px;
+}
+
+.timeline-post-meta {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
 }
 
 .timeline-post-name {
