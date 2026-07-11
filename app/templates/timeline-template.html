@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta property="og:title" content="Personal Portfolio">
+    <meta property="og:description" content="My Personal Portfolio">
+    <meta property="og:url" content="{{ url }}">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+
+    <link lang='sass' rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
+    <link rel='icon' href='{{ url_for('static', filename='img/favicon.ico') }}' type='image/x-icon' />
+    <title>{{ title }}</title>
+</head>
+<body>
+    <header class="nav-bar">
+        <div class="nav-content">
+            <a href="/">
+                <div class="nav-logo">
+                    <img src="{{ url_for('static', filename='img/logo.svg') }}" />
+                </div>
+            </a>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/hobbies">Hobbies</a></li>
+                <li><a href="/experience">Experience</a></li>
+                <li><a href="/map">Map</a></li>
+                <li><a href="/timeline">Timeline</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <div class="regular-title">
+        <h1>{{ title }}</h1>
+    </div>
+    <div class="form-container">
+        <form id="timeline-form" method="POST" action="/api/timeline_post">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="content">Content:</label>
+                <textarea id="content" name="content" required></textarea>
+            </div>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <div class="timeline-posts-container">
+        <h2>Timeline Posts</h2>
+        <div class="timeline-post-grid">
+            {% for post in posts %}
+            <div class="timeline-post">
+                <div class="timeline-post-header">
+                    <img class="timeline-post-avatar" src="https://www.gravatar.com/avatar/{{ post.email|gravatar_hash }}?d=identicon&s=80" alt="{{ post.name }}">
+                    <div class="timeline-post-meta">
+                        <span class="timeline-post-name">{{ post.name }}</span>
+                        <span class="timeline-post-date">{{ post.created_at.strftime('%B %d, %Y') }}</span>
+                    </div>
+                </div>
+                <p class="timeline-post-content">{{ post.content }}</p>
+            </div>
+            {% else %}
+            <p class="timeline-empty">No posts yet. Be the first to share!</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('timeline-form');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const payload = new FormData(form);
+            fetch('/api/timeline_post', {
+                method: 'POST',
+                body: payload,
+            })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                window.location.reload();
+            })
+            .catch(err => console.error('Error submitting timeline post:', err));
+        });
+    </script>
+</body>
+</html>
