@@ -1,3 +1,4 @@
+
 import os
 import hashlib
 import re
@@ -33,10 +34,8 @@ class TimelinePost(Model):
     class Meta:
         database = mydb
 
-# Only connect and create tables if running as main modules, not when imported by test modules
-if os.getenv("TESTING") != "true":      
-    mydb.connect()
-    mydb.create_tables([TimelinePost])
+mydb.connect(reuse_if_open=True)
+mydb.create_tables([TimelinePost])
 
 @app.route('/')
 def index():
