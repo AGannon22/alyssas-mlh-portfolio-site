@@ -2,10 +2,12 @@
 import os
 import hashlib
 import re
-from flask import Flask, render_template, request
+import glob
+import datetime
+import yaml
+from flask import Flask, render_template, request, abort
 from dotenv import load_dotenv
 from peewee import *
-import datetime
 from playhouse.shortcuts import model_to_dict
 
 load_dotenv()
@@ -92,3 +94,43 @@ def get_time_line_post():
 def timeline():
     posts = TimelinePost.select().order_by(TimelinePost.created_at.desc())
     return render_template('timeline-template.html', title="Timeline", url=os.getenv("URL"), posts=posts)
+BLOG_POSTS_DIR = os.path.join(os.path.dirname(__file__), 'blog_posts')
+
+def load_blog_posts():
+    posts = []
+    for path in glob.glob(os.path.join(BLOG_POSTS_DIR, '*.html')):
+        slug = os.path.splitext(os.path.basename(path))[0]
+        with open(path, encoding='utf-8') as f:
+            raw = f.read()
+
+        meta = {}
+        body = raw
+        if raw.startswith('---'):
+            _, frontmatter, body = raw.split('---', 2)
+            meta = yaml.safe_load(frontmatter) or {}
+
+        date = meta.get('date')
+        posts.append({
+            'slug': slug,
+            'title': meta.get('title', slug),
+            'date': date,
+            'date_display': f"{date.strftime('%B')} {date.day}, {date.year}" if isinstance(date, datetime.date) else (date or ''),
+            'summary': meta.get('summary', ''),
+            'html': body.strip(),
+        })
+
+    posts.sort(key=lambda p: p['date'] or datetime.date.min, reverse=True)
+    return posts
+
+@app.route('/blog')
+def blog():
+    posts = load_blog_posts()
+    return render_template('blog_home.html', title="Blog", url=os.getenv("URL"), posts=posts)
+
+@app.route('/blog/<slug>')
+def blog_post(slug):
+    posts = load_blog_posts()
+    post = next((p for p in posts if p['slug'] == slug), None)
+    if post is None:
+        abort(404)
+    return render_template('blog_post.html', title=post['title'], url=os.getenv("URL"), post=post)
