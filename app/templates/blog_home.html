@@ -15,6 +15,7 @@
         rel="stylesheet">
 
     <link lang='sass' rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/blog.css') }}">
     <link rel='icon' href='{{ url_for('static', filename='img/favicon.ico') }}' type='image/x-icon' />
     <title>{{ title }}</title>
 </head>
@@ -33,7 +34,6 @@
                 <li><a href="/map">Map</a></li>
                 <li><a href="/timeline">Timeline</a></li>
                 <li><a href="/blog">Blog</a></li>
-
             </ul>
         </div>
     </header>
@@ -41,18 +41,15 @@
     <div class="regular-title">
         <h1>{{ title }}</h1>
     </div>
-    <div class = "items-container">
-        {% for item in items %}
-        <div class="item">
-            <div class="item-image">
-                <img src="{{ url_for('static', filename=item.img|replace('app/static/','')) }}" alt="{{ item.name }}">
-            </div>
-            <div class="item-info">
-                <h2>{{ item.name }}</h2>
-                <p class="item-time">{{ item.time }}</p>
-                <p>{{ item.description }}</p>
-            </div>
-        </div>
+    <div class="blog-list">
+        {% for post in posts %}
+        <a class="blog-card" href="{{ url_for('blog_post', slug=post.slug) }}">
+            <h2>{{ post.title }}</h2>
+            {% if post.date_display %}<p class="blog-card-date">{{ post.date_display }}</p>{% endif %}
+            {% if post.summary %}<p class="blog-card-summary">{{ post.summary }}</p>{% endif %}
+        </a>
+        {% else %}
+        <p>No posts yet — check back soon!</p>
         {% endfor %}
     </div>
 
