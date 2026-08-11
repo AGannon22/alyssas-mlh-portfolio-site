@@ -30,3 +30,5 @@ jobs:
         run: ssh my-vps 'cd ${{ secrets.PROJECT_ROOT }} && chmod +x scripts/redeploy-site.sh && ./scripts/redeploy-site.sh'
       - name: Check Containers
         run: ssh my-vps 'cd ${{ secrets.PROJECT_ROOT }} && docker ps'
+      - name: Discord Message
+        run: curl -s -X POST "${{ secrets.DISCORD_WEBHOOK }}" -d "content=🚀 Deployment Successful!!!"
