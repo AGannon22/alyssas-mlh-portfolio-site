@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta property="og:title" content="Personal Portfolio">
+    <meta property="og:description" content="My Personal Portfolio">
+    <meta property="og:url" content="{{ url }}">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+
+    <link lang='sass' rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/blog.css') }}">
+    <link rel='icon' href='{{ url_for('static', filename='img/favicon.ico') }}' type='image/x-icon' />
+    <title>{{ title }}</title>
+</head>
+<body>
+    <header class="nav-bar">
+        <div class="nav-content">
+            <a href="/">
+                <div class="nav-logo">
+                    <img src="{{ url_for('static', filename='img/logo.svg') }}" />
+                </div>
+            </a>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/hobbies">Hobbies</a></li>
+                <li><a href="/experience">Experience</a></li>
+                <li><a href="/map">Map</a></li>
+                <li><a href="/timeline">Timeline</a></li>
+                <li><a href="/blog">Blog</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <article class="blog-post">
+        <a class="blog-back-link" href="{{ url_for('blog') }}">&larr; Back to Blog</a>
+        <h1>{{ post.title }}</h1>
+        {% if post.date_display %}<p class="blog-post-date">{{ post.date_display }}</p>{% endif %}
+        <div class="blog-post-content">
+            {{ post.html | safe }}
+        </div>
+    </article>
+
+</body>
+</html>

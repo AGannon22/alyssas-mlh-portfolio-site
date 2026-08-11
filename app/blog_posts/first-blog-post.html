@@ -1,0 +1,23 @@
+---
+title: First Blog Post!
+date: 2026-08-10
+summary: This is a post where I explain how my Blog posts work!
+---
+<h2>Welcome!</h2>
+<p>Welcome to my new blog section! I wanted to create a section where just I can post, as opposed for the timeline section.</p>
+<p>In the future, I want to make it so the timeline page connects to each users Github, and displays their profile. Kinda like a visited section for people I've worked with</p>
+
+<h2> How it works </h2>
+<p>I upload posts to <code>/app/blog_posts/</code> as html files. I considered doing markdown files, but I wanted to have flexibility with how things were formatted for each post. At the start, I use a YAML block for the title, date, and summary for the post, after that comes the actual HTML</p>
+<p>Before loading the blog home page, I load each blog posts in <code>/app/blog_posts</code> and use Jinja to loop through the posts. The filename of each post also doubles as its URL "slug." This file is named <code>first-blog-post.html</code>, so its address is <code>/blog/first-blog-post</code></p>
+<p>There are also different html tags for different things like videos, pictures, etc</p>
+
+<h2>For example... article links</h2>
+<p>This is an article that I used for inspiration for my blog section!</p>
+<div class="blog-links">
+    <a class="blog-link-card" href="https://htmlforpeople.com/adding-a-blog/" target="_blank" rel="noopener">
+        <span class="blog-link-title">HTML For People - Adding a Blog</span>
+        <span class="blog-link-desc">My inspiration!!!</span>
+        <span class="blog-link-url">https://htmlforpeople.com/adding-a-blog/</span>
+    </a>
+</div>
