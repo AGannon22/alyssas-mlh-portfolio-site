@@ -28,3 +28,5 @@ jobs:
           SSH_IP: ${{ secrets.SSH_IP }}
       - name: Deploy Website
         run: ssh my-vps 'cd ${{ secrets.PROJECT_ROOT }} && chmod +x scripts/redeploy-site.sh && ./scripts/redeploy-site.sh'
+      - name: Check Containers
+        run: ssh my-vps 'cd ${{ secrets.PROJECT_ROOT }} && docker-compose ps'
